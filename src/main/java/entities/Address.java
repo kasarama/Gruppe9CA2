@@ -39,8 +39,8 @@ public class Address implements Serializable {
 
     public Address() {
     }
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    //FIX THIS
+    @ManyToOne(mappedBy = "address")
     private CityInfo cityInfo; 
 
     public Address(String street, String additionalInfo, CityInfo cityInfo) {

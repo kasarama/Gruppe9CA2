@@ -14,7 +14,7 @@ public class PersonDTO {
     private String email;
     private ArrayList<PhoneDTO> phoneList;
     private ArrayList<HobbyDTO> hobbyList;
-    private AdressDTO address;
+    private AddressDTO address;
 
     public PersonDTO(Person person) {
         this.id = person.getId();
@@ -23,8 +23,11 @@ public class PersonDTO {
         this.email = person.getEmail();
         this.phoneList = new ArrayList();
         this.hobbyList = new ArrayList();
-        this.address = new AdressDTO();
     }
+
+    public PersonDTO() {
+    }
+    
     
     
     
@@ -78,11 +81,11 @@ public class PersonDTO {
         this.hobbyList = hobbyList;
     }
 
-    public AdressDTO getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public void setAddress(AdressDTO address) {
+    public void setAddress(AddressDTO address) {
         this.address = address;
     }
     

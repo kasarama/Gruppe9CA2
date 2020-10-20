@@ -16,11 +16,12 @@ public class AddressDTO {
     private String street;
     private String additionalInfo;
     private List<PersonDTO> persons;
-    private CityInfoDTO cityInfo;
-
+    private String city;
+    
     public AddressDTO(Address address) {
         this.street = address.getStreet();
         this.additionalInfo = address.getAdditionalInfo();
+        this.city = address.getCity();
     }
     
     public AddressDTO(String street, String additionalInfo) {
@@ -56,13 +57,15 @@ public class AddressDTO {
         this.persons = persons;
     }
 
-    public CityInfoDTO getCityInfo() {
-        return cityInfo;
+    public String getCity() {
+        return city;
     }
 
-    public void setCityInfo(CityInfoDTO cityInfo) {
-        this.cityInfo = cityInfo;
+    public void setCity(String city) {
+        this.city = city;
     }
+
+   
     
     
 }

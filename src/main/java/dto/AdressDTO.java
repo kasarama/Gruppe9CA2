@@ -1,6 +1,0 @@
-
-package dto;
-
-class AdressDTO {
-    
-}

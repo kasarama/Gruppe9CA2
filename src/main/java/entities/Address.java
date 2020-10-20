@@ -29,20 +29,21 @@ public class Address implements Serializable {
     private Integer id;
     private String street;
     private String additionalInfo;
-    @OneToMany(mappedBy = "address")
+    
+    //Fixed, added cascade and then the mappedby worked.
+    @OneToMany(mappedBy = "address" , 
+            cascade = CascadeType.PERSIST)
     private List<Person> personList;
     
-
-    public Integer getId() {
-        return id;
-    }
-
+    //Fixed, changed mappedBy to cascade
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private CityInfo cityInfo; 
+    
+    
     public Address() {
     }
-    //FIX THIS
-    @ManyToOne(mappedBy = "address")
-    private CityInfo cityInfo; 
-
+    
+    //Mon vi blot skal gøre at personen bliver tilføjet oppe under 
     public Address(String street, String additionalInfo, CityInfo cityInfo) {
         this.street = street;
         this.additionalInfo = additionalInfo;
@@ -58,6 +59,11 @@ public class Address implements Serializable {
         this.cityInfo = cityInfo;
     }
 
+    public Integer getId() {
+        return id;
+    }
+    
+    
     public String getStreet() {
         return street;
     }

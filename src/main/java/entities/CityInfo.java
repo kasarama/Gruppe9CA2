@@ -28,17 +28,61 @@ public class CityInfo implements Serializable {
     private String zipcode;
     private String city;
 
-    public Integer getId() {
-        return id;
-    }
+    
+    //Fixed, added cascade.
+    @OneToMany(mappedBy = "address" , cascade = CascadeType.PERSIST)
+    //List<Address> addressList;
+    private Address address; 
 
     public CityInfo() {
     }
+    
+    public CityInfo(String city, String zipcode) {
+        this.zipcode = zipcode;
+        this.city = city;
+    }
+    
+    public Integer getId() {
+        return id;
+    }
+   
+    public String getZipcode() {
+        return zipcode;
+    }
 
-    //
-    @OneToMany(mappedBy = "address")
-    private Address address; 
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
     
     
+    /**
+    Nedenstående metode giver os lov til at tilføje en adresse.
+    * Og lige nu gemmer vi vel ikke adressen nogen steder, så vi skal vel have listen.
+    */
     
+//    public void addAddress(Address address)
+//        this.addressList.add(address)
+//        if(address != null){
+//           address.setCityInfo(this); 
+//        }
+    
+//    public List<Address> getAddress(){
+//        return addressList;
+//    }
 }

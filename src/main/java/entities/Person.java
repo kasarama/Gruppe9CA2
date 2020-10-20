@@ -3,10 +3,14 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -22,9 +26,23 @@ public class Person implements Serializable {
     private String email;
     private String firstName;
     private String lastName;
-    private ArrayList phoneNumbers;
+    @OneToMany(mappedBy = "personList", cascade = CascadeType.PERSIST)
+    private ArrayList<Phone> phoneNumbers;
+    @ManyToMany (mappedBy = "personList", cascade = CascadeType.PERSIST)
     private ArrayList hobbyList;
+    @ManyToOne (cascade = CascadeType.PERSIST)
     private Address address;
+
+    public Person(String email, String firstName, String lastName, ArrayList<Phone> phoneNumbers, ArrayList hobbyList, Address address) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumbers = phoneNumbers;
+        this.hobbyList = hobbyList;
+        this.address = address;
+    }
+    
+    
 
     public Integer getId() {
         return id;

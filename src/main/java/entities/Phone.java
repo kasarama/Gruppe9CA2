@@ -6,10 +6,12 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -24,6 +26,18 @@ public class Phone implements Serializable {
     private Integer id;
     private Integer number;
     private String description;
+    
+
+    public Phone() {
+    }
+
+    public Phone(Integer number, String description) {
+        this.number = number;
+        this.description = description;
+        
+    }
+    
+    
 
     public Integer getId() {
         return id;

@@ -11,10 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
- * @author zarpy
+ * @author søren og magda
  */
 @Entity
 public class Hobby implements Serializable {
@@ -25,8 +26,22 @@ public class Hobby implements Serializable {
     private Integer id;
     private String name;
     private String description;
-    private ArrayList personList;
+    @ManyToMany
+    private ArrayList<Person> personList;
 
+    public Hobby() {
+    }
+
+    public Hobby(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.personList = new ArrayList<>();
+    }
+    
+    
+
+    
+    
     public Integer getId() {
         return id;
     }

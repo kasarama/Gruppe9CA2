@@ -1,5 +1,5 @@
 package facades;
-
+/*
 import utils.EMF_Creator;
 import entities.RenameMe;
 import javax.persistence.EntityManager;
@@ -61,3 +61,5 @@ public class FacadeExampleTest {
     }
 
 }
+
+*/

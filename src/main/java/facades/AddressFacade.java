@@ -41,8 +41,6 @@ private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-//Fix: DTO classes does not exist yet. 
-
 public AddressDTO addAddress(AddressDTO address) throws Exception {
     EntityManager em = emf.createEntityManager();
     Address addAddress = new Address();

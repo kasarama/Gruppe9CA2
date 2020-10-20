@@ -36,27 +36,38 @@ public class Address implements Serializable {
     private List<Person> personList;
     
     //Fixed, changed mappedBy to cascade
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private CityInfo cityInfo; 
+
+    //@ManyToOne()
+    //private CityInfo cityInfo; 
+    private String city;
+
     
     
     public Address() {
     }
     
     //Mon vi blot skal gøre at personen bliver tilføjet oppe under 
-    public Address(String street, String additionalInfo, CityInfo cityInfo) {
+
+    
+    //public Address(String street, String additionalInfo, CityInfo cityInfo) {
+    public Address(String street, String additionalInfo, String city) {
+
         this.street = street;
         this.additionalInfo = additionalInfo;
+        this.city = city;
         this.personList = new ArrayList();
-        this.cityInfo = cityInfo;
+//        this.cityInfo = cityInfo;
+        
     }
 
     
-    public Address(String street, String additionalInfo, List<Person> personList, CityInfo cityInfo) {
+    //public Address(String street, String additionalInfo, List<Person> personList, CityInfo cityInfo) {
+    public Address(String street, String additionalInfo, List<Person> personList, String city) {
         this.street = street;
         this.additionalInfo = additionalInfo;
         this.personList = personList;
-        this.cityInfo = cityInfo;
+        this.city = city;
+//        this.cityInfo = cityInfo;
     }
 
     public Integer getId() {
@@ -87,14 +98,24 @@ public class Address implements Serializable {
     public void setPersonList(List<Person> personList) {
         this.personList = personList;
     }
+//
+//    public CityInfo getCityInfo() {
+//        return cityInfo;
+//    }
+//
+//    public void setCityInfo(CityInfo cityInfo) {
+//        this.cityInfo = cityInfo;
+//    }
 
-    public CityInfo getCityInfo() {
-        return cityInfo;
+    public String getCity() {
+        return city;
     }
 
-    public void setCityInfo(CityInfo cityInfo) {
-        this.cityInfo = cityInfo;
+    public void setCity(String city) {
+        this.city = city;
     }
+    
+    
     
     public void addPerson(Person person){
         this.personList.add(person);

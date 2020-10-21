@@ -7,21 +7,29 @@ package dto;
 
 import entities.Person;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author magda
  */
 public class PersonListDTO {
-    private ArrayList<PersonDTO> personList;
 
-    public PersonListDTO(ArrayList<Person> personList) {
+    private ArrayList<PersonDTO> personList = new ArrayList();
+
+    public PersonListDTO() {
+    }
+
+    public PersonListDTO(List<Person> personList) {
         this.personList = new ArrayList();
         for (Person person : personList) {
             PersonDTO personDTO = new PersonDTO(person);
-            
+
         }
     }
-    
-    
+
+    public ArrayList<PersonDTO> getList() {
+        return this.personList;
+    }
+
 }

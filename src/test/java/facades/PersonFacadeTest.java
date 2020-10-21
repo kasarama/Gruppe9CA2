@@ -3,6 +3,7 @@ package facades;
 import dto.AddressDTO;
 import dto.HobbyDTO;
 import dto.PersonDTO;
+import dto.PersonListDTO;
 import dto.PhoneDTO;
 import entities.Address;
 import entities.Hobby;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Disabled;
 
 
 /**
@@ -36,6 +38,9 @@ public class PersonFacadeTest {
     private Hobby hobby2 = new Hobby("danicng","Just danicng");
     private Address address1= new Address("Street One", "2.th", "Søborg");
     private Address address2= new Address("Street Two", "3.th", "Bagsværd");
+    private Person person1;
+    private Person person2;
+    
     
     
     
@@ -60,11 +65,13 @@ public class PersonFacadeTest {
         hobbyL1.add(hobby2);
         HashSet<Hobby> hobbyL2= new HashSet();
         hobbyL2.add(hobby1);
+       person1=new Person("email@email", "Magda", "Wawrzak", phoneL1, hobbyL1,address1);
+       person2=new Person("email@com", "Bob", "Sponge", phoneL2, hobbyL2, address2);
         try {
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Person").executeUpdate();
-            em.persist(new Person("email@email", "Magda", "Wawrzak", phoneL1, hobbyL1,address1));
-            em.persist(new Person("email@com", "Bob", "Sponge", phoneL2, hobbyL2, address2));
+            em.persist(person1);
+            em.persist(person2);
 
             em.getTransaction().commit();
         } finally {
@@ -77,7 +84,10 @@ public class PersonFacadeTest {
         PersonDTO personDTO = new PersonDTO();
         AddressDTO addressDTO = new AddressDTO("Sesam Strrt","666.sd");
         ArrayList<HobbyDTO> hobbyList = new ArrayList();
+        hobbyList.add(new HobbyDTO("Walking","slowwwwely"));
+        hobbyList.add(new HobbyDTO("Eating","Sweets"));
         ArrayList<PhoneDTO> phoneList = new ArrayList();
+       // phoneList.add(new PhoneDTO(phone1))
         personDTO.setAddress(addressDTO);
         personDTO.setEmail("gmail");
         personDTO.setFirstName("Elmo");
@@ -85,6 +95,15 @@ public class PersonFacadeTest {
         personDTO.setHobbyList(hobbyList);
         personDTO.setPhoneList(phoneList);
         assertTrue("Elmo".equals(facade.addPerson(personDTO).getFirstName()), "Expects two rows in the database");
+    }
+    
+    @Disabled
+    @Test
+    public void testGetPersonListByHobby() {
+        String hobbyName = hobby1.getName();
+        PersonListDTO result = facade.getPersonListByHobby(hobbyName);
+        assertTrue(result.getList().contains(person1));
+        assertTrue(result.getList().contains(person2));
     }
 }
 

@@ -28,11 +28,6 @@ public class PersonDTO {
     public PersonDTO() {
     }
     
-    
-    
-    
-    //todo methods to convert hobbyList to DTO and phoneLit to DTO objects
-
     public Integer getId() {
         return id;
     }

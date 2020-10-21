@@ -1,6 +1,8 @@
 
 package dto;
 
+import entities.Phone;
+
 /**
  *
  * @author magda og søren
@@ -9,9 +11,9 @@ public class PhoneDTO {
     private Integer number;
     private String description;
 
-    public PhoneDTO(Integer number, String description) {
-        this.number = number;
-        this.description = description;
+    public PhoneDTO(Phone phone) {
+        this.number = phone.getNumber();
+        this.description = phone.getDescription();
     }
 
     public Integer getNumber() {

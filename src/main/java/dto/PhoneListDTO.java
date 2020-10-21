@@ -1,6 +1,7 @@
 
 package dto;
 
+import entities.Phone;
 import java.util.ArrayList;
 
 /**
@@ -9,6 +10,16 @@ import java.util.ArrayList;
  */
 public class PhoneListDTO {
     
-    private ArrayList<PhoneDTO> phoneList;
+    private ArrayList<PhoneDTO> phoneList=new ArrayList();
+
+    public PhoneListDTO(ArrayList<Phone> phoneList) {
+        for (Phone phone : phoneList) {
+            PhoneDTO phoneDTO = new PhoneDTO(phone);
+            this.phoneList.add(phoneDTO);            
+        }
+                
+    }
+    
+    
     
 }

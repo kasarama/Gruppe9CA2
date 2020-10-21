@@ -20,6 +20,12 @@ public class HobbyDTO {
         this.personList = new ArrayList();
         
     }
+
+    public HobbyDTO(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    
     
     /*
     public ArrayList<PersonDTO> convertAllPerson(ArrayList<Person> persons){

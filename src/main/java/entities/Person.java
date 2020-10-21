@@ -25,7 +25,6 @@ public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "PER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String email;

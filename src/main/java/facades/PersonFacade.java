@@ -9,6 +9,7 @@ import entities.Hobby;
 import entities.Person;
 import entities.Phone;
 import java.util.ArrayList;
+import java.util.HashSet;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -48,7 +49,7 @@ public class PersonFacade implements IPersonFacade{
             phoneListEntity.add(phoneEntity);            
         }
         
-        ArrayList<Hobby> hobbyListEntity = new ArrayList();
+        HashSet<Hobby> hobbyListEntity = new HashSet();
         for (HobbyDTO hobbyDTO : personDTO.getHobbyList()) {
              Hobby hobby = new Hobby(hobbyDTO.getName(),hobbyDTO.getDescription());
              hobbyListEntity.add(hobby);    

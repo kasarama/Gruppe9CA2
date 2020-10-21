@@ -10,6 +10,8 @@ import entities.Person;
 import entities.Phone;
 import entities.RenameMe;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.BeforeAll;
@@ -53,10 +55,10 @@ public class PersonFacadeTest {
         phoneL1.add(phone2);
         ArrayList<Phone> phoneL2= new ArrayList();
         phoneL1.add(phone3);
-        ArrayList<Hobby> hobbyL1= new ArrayList();
+        HashSet<Hobby> hobbyL1= new HashSet();
         hobbyL1.add(hobby1);
         hobbyL1.add(hobby2);
-         ArrayList<Hobby> hobbyL2= new ArrayList();
+        HashSet<Hobby> hobbyL2= new HashSet();
         hobbyL2.add(hobby1);
         try {
             em.getTransaction().begin();

@@ -7,10 +7,13 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
@@ -27,7 +30,8 @@ public class Hobby implements Serializable {
     private String name;
     private String description;
     @ManyToMany
-    private ArrayList<Person> personList;
+    @JoinTable(name="PERSON_HOBBY") // Owning side
+    private Set<Person> personList = new HashSet();
 
     public Hobby() {
     }
@@ -35,7 +39,7 @@ public class Hobby implements Serializable {
     public Hobby(String name, String description) {
         this.name = name;
         this.description = description;
-        this.personList = new ArrayList<>();
+        this.personList = new HashSet<>();
     }
     
     
@@ -62,11 +66,11 @@ public class Hobby implements Serializable {
         this.description = description;
     }
 
-    public ArrayList getPersonList() {
+    public Set<Person> getPersonList() {
         return personList;
     }
 
-    public void setPersonList(ArrayList personList) {
+    public void setPersonList(HashSet<Person> personList) {
         this.personList = personList;
     }
     

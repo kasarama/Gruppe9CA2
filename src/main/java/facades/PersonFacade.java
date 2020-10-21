@@ -41,11 +41,14 @@ public class PersonFacade implements IPersonFacade {
     public PersonDTO addPerson(PersonDTO personDTO) {
         EntityManager em = emf.createEntityManager();
 
-        ArrayList<Phone> phoneListEntity = new ArrayList();
+       /* ArrayList<Phone> phoneListEntity = new ArrayList();
         for (PhoneDTO phoneDTO : personDTO.getPhoneList()) {
             Phone phoneEntity = new Phone(phoneDTO.getNumber(), phoneDTO.getDescription());
             phoneListEntity.add(phoneEntity);
         }
+        
+        
+        
 
         HashSet<Hobby> hobbyListEntity = new HashSet();
         for (HobbyDTO hobbyDTO : personDTO.getHobbyList()) {
@@ -53,14 +56,24 @@ public class PersonFacade implements IPersonFacade {
             hobbyListEntity.add(hobby);
 
         }
-
+*/
         Address addressEntity = new Address();
         addressEntity.setAdditionalInfo(personDTO.getAddress().getAdditionalInfo());
         addressEntity.setStreet(personDTO.getAddress().getStreet());
         addressEntity.setCity(personDTO.getAddress().getCity());
 
-        Person person = new Person(personDTO.getEmail(), personDTO.getFirstName(), personDTO.getLastName(), phoneListEntity, hobbyListEntity, addressEntity);
+        Person person = new Person(personDTO.getEmail(), personDTO.getFirstName(), personDTO.getLastName(), addressEntity);
 
+        for (HobbyDTO hobbyDTO : personDTO.getHobbyList()) {
+            Hobby hobby = new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription());
+            person.addHobby(hobby);
+        }
+        
+        for (PhoneDTO phoneDTO : personDTO.getPhoneList()) {
+            Phone phoneEntity = new Phone(phoneDTO.getNumber(), phoneDTO.getDescription());
+            person.getPhoneNumbers().add(phoneEntity);
+        }
+        
         try {
             em.getTransaction().begin();
             em.persist(person);

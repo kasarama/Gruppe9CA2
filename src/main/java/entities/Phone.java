@@ -73,8 +73,7 @@ public class Phone implements Serializable {
     public void setOwner(Person person) {
         if(this.owner != null)
         this.owner.removePhone(this);
-        this.owner = person;
-        
+        this.owner = person;        
       
         if (!person.getPhoneNumbers().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
             person.getPhoneNumbers().add(this);

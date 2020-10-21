@@ -46,12 +46,12 @@ public class Person implements Serializable {
 
     
     
-    public Person(String email, String firstName, String lastName, ArrayList<Phone> phoneNumbers, HashSet hobbyList, Address address) {
+    public Person(String email, String firstName, String lastName,  Address address) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumbers = phoneNumbers;
-        this.hobbyList = hobbyList;
+        this.phoneNumbers = new ArrayList<>();
+        this.hobbyList = new HashSet<>();
         this.address = address;
     }
     
@@ -60,6 +60,12 @@ public class Person implements Serializable {
         this.phoneNumbers.add(phone);
         if (phone.getOwner() != this) {
             phone.setOwner(this);
+        }
+    }
+    public void addHobby(Hobby hobby){
+        this.hobbyList.add(hobby);
+        if (!hobby.getPersonList().contains(this)){
+        hobby.addPerson(this);
         }
     }
     

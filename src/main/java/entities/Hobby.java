@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Hobby implements Serializable {
     private Integer id;
     private String name;
     private String description;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST )
     @JoinTable(name="PERSON_HOBBY") // Owning side
     private Set<Person> personList = new HashSet();
 
@@ -42,6 +43,12 @@ public class Hobby implements Serializable {
         this.personList = new HashSet<>();
     }
     
+    public void addPerson(Person person){
+        this.personList.add(person);
+        if(!person.getHobbyList().contains(this)){
+        person.addHobby(this);
+        }
+    }
     
     public Integer getId() {
         return id;

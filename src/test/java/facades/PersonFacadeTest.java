@@ -65,8 +65,16 @@ public class PersonFacadeTest {
         hobbyL1.add(hobby2);
         HashSet<Hobby> hobbyL2= new HashSet();
         hobbyL2.add(hobby1);
-       person1=new Person("email@email", "Magda", "Wawrzak", phoneL1, hobbyL1,address1);
-       person2=new Person("email@com", "Bob", "Sponge", phoneL2, hobbyL2, address2);
+       person1=new Person("email@email", "Magda", "Wawrzak",address1);
+       person1.addHobby(hobby1);
+       person1.addPhone(phone1);
+       person1.addPhone(phone2);
+              
+       
+       person2=new Person("email@com", "Bob", "Sponge",  address2);
+       person2.addHobby(hobby1);
+       person2.addHobby(hobby2);
+       person2.addPhone(phone3);
         try {
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Person").executeUpdate();
@@ -87,7 +95,8 @@ public class PersonFacadeTest {
         hobbyList.add(new HobbyDTO("Walking","slowwwwely"));
         hobbyList.add(new HobbyDTO("Eating","Sweets"));
         ArrayList<PhoneDTO> phoneList = new ArrayList();
-       // phoneList.add(new PhoneDTO(phone1))
+        phoneList.add(new PhoneDTO(123456, "private"));
+        phoneList.add(new PhoneDTO(787897897, "work"));
         personDTO.setAddress(addressDTO);
         personDTO.setEmail("gmail");
         personDTO.setFirstName("Elmo");

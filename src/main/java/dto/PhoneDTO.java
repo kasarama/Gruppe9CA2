@@ -16,6 +16,13 @@ public class PhoneDTO {
         this.description = phone.getDescription();
     }
 
+    public PhoneDTO(Integer number, String description) {
+        this.number = number;
+        this.description = description;
+    }
+    
+    
+
     public Integer getNumber() {
         return number;
     }

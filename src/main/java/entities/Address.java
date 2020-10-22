@@ -9,12 +9,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Persistence;
@@ -30,7 +32,9 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "Street", length = 30, nullable = false)
     private String street;
+    @Column(name = "AdditionalInfo", length = 30, nullable = false)
     private String additionalInfo;
 
     //Fixed, added cascade and then the mappedby worked.
@@ -39,6 +43,7 @@ public class Address implements Serializable {
     private List<Person> personList;
 
     //Fixed, changed mappedBy to cascade
+    @JoinColumn(name = "ZipCode")
     @ManyToOne()
     private CityInfo cityInfo;
     //private String city;
@@ -66,8 +71,6 @@ public class Address implements Serializable {
         //    this.city = city;
         this.cityInfo = cityInfo;
     }
-    
-    
 
     public Integer getId() {
         return id;
@@ -116,27 +119,29 @@ public class Address implements Serializable {
     public void addPerson(Person person) {
         this.personList.add(person);
         if (person != null) {
-            personList.add(person);
+            person.setAddress(this);
         }
     }
 
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
-        
+
         Person p1 = new Person("email", "Bob", "Belcher");
-        CityInfo c1 = new CityInfo("3400");
-        Address a1 = new Address("Some street","AdditionalInfo", c1);
-           try{
-        em.getTransaction().begin();
-        em.persist(c1);
-        em.persist(p1);
-        em.persist(a1);
- 
-        em.getTransaction().commit();
-        
-        } finally{
+        CityInfo c1 = new CityInfo("3401");
+        Address a1 = new Address("Some street", "AdditionalInfo", c1);
+        //p1.addAddress(a1);
+        // a1.addPerson(p1);
+        try {
+            em.getTransaction().begin();
+            em.persist(c1);
+            em.persist(p1);
+            em.persist(a1);
+
+            em.getTransaction().commit();
+
+        } finally {
             em.close(); //We close this every request. We keep open the factory
         }
-    }   
+    }
 }

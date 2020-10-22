@@ -30,7 +30,7 @@ public class AddressFacade {
      * @param _emf
      * @return an instance of this facade class
      */
-    public static AddressFacade getFacadeExample(EntityManagerFactory _emf) {
+    public static AddressFacade getAddressFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new AddressFacade();
@@ -60,23 +60,23 @@ public class AddressFacade {
 
     }
 
-    public AddressDTO findAddress(String street) throws NotFoundException {
-        EntityManager em = emf.createEntityManager();
-        Address addAddress = null;
-        try {
-            em.getTransaction().begin();
-            TypedQuery<Address> query = em.createQuery("SELECT a FROM Address a WHERE"
-                    + "a.street = :address", Address.class)
-                    .setParameter("Address", street);
-            em.getTransaction().commit();
-            addAddress = query.getSingleResult();
-            return new AddressDTO(addAddress);
-        } catch (Exception e) {
-            throw new NotFoundException("The address is not found");
-        } finally {
-            em.close();
-        }
-    }
+//    public AddressDTO findAddress(String street) throws NotFoundException {
+//        EntityManager em = emf.createEntityManager();
+//        Address addAddress = null;
+//        try {
+//            em.getTransaction().begin();
+//            TypedQuery<Address> query = em.createQuery("SELECT a FROM Address a WHERE"
+//                    + "a.street = :address", Address.class)
+//                    .setParameter("Address", street);
+//            em.getTransaction().commit();
+//            addAddress = query.getSingleResult();
+//            return new AddressDTO(addAddress);
+//        } catch (Exception e) {
+//            throw new NotFoundException("The address is not found");
+//        } finally {
+//            em.close();
+//        }
+//    }
 //public List<CityInfoDTO> getAllZipCodes(){
 //    EntityManager em = emf.createEntityManager();
 //    try {

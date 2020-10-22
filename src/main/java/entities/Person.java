@@ -59,7 +59,15 @@ public class Person implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    
+        public void addAddress(Address address) {
+        this.address = address;
+        if (address != null) {
+            this.address = address;
+            address.addPerson(this);
+        } else {
+            this.address = null;   
+        }
+    }
     public void addPhone(Phone phone) {
         this.phoneNumbers.add(phone);
         if (phone.getOwner() != this) {

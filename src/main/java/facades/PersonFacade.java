@@ -60,7 +60,7 @@ public class PersonFacade implements IPersonFacade {
         Address addressEntity = new Address();
         addressEntity.setAdditionalInfo(personDTO.getAddress().getAdditionalInfo());
         addressEntity.setStreet(personDTO.getAddress().getStreet());
-        addressEntity.setCity(personDTO.getAddress().getCity());
+//        addressEntity.setCity(personDTO.getAddress().getCity());
 
         Person person = new Person(personDTO.getEmail(), personDTO.getFirstName(), personDTO.getLastName(), addressEntity);
 

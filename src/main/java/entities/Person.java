@@ -54,7 +54,12 @@ public class Person implements Serializable {
         this.hobbyList = new HashSet<>();
         this.address = address;
     }
-    
+
+    public Person(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
     
     public void addPhone(Phone phone) {
         this.phoneNumbers.add(phone);

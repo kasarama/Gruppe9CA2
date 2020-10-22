@@ -11,32 +11,33 @@ import java.util.ArrayList;
  */
 public class HobbyDTO {
     private String name;
-    private String description;
+    private String wikiLink;
     private ArrayList<PersonDTO> personList;
+    private String category;
+    private String type;
 
     public HobbyDTO(Hobby hobby) {
         this.name = hobby.getName();
-        this.description = hobby.getDescription();
+        this.wikiLink = hobby.getWikiLink();
         this.personList = new ArrayList();
+        this.category = hobby.getCategory();
+        this.type = hobby.getType();
         
     }
 
-    public HobbyDTO(String name, String description) {
+    public HobbyDTO(String name, String wikiLink, String category, String type) {
         this.name = name;
-        this.description = description;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;          
+    }
+
+    public HobbyDTO(String name) {
+        this.name = name;
+
     }
     
     
-    /*
-    public ArrayList<PersonDTO> convertAllPerson(ArrayList<Person> persons){
-        ArrayList personsDTO = new ArrayList<PersonDTO>();
-        for (Person person : persons) {
-            
-            
-            
-        }
-    }
-    */
 
     public String getName() {
         return name;
@@ -46,20 +47,38 @@ public class HobbyDTO {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+
 
     public ArrayList<PersonDTO> getPersonList() {
         return personList;
+        
     }
 
-    public void setPersonList(ArrayList<PersonDTO> personList) {
-        this.personList = personList;
+    public String getWikiLink() {
+        return wikiLink;
     }
-    
+
+    public void setWikiLink(String wikiLink) {
+        this.wikiLink = wikiLink;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
+
 }

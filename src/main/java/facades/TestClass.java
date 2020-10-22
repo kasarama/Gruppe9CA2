@@ -29,7 +29,7 @@ public class TestClass {
         personDTO.setHobbyList(hobbyList);
         personDTO.setPhoneList(phoneList);
         PersonDTO addedPerson =(PersonDTO) personFacade.addPerson(personDTO);
-        System.out.println("New person's id: " );
+        System.out.println("New person's id: "+ addedPerson.getId());
     }
     
 }

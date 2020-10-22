@@ -64,18 +64,25 @@ public class PersonFacade implements IPersonFacade {
 
         Person person = new Person(personDTO.getEmail(), personDTO.getFirstName(), personDTO.getLastName(), addressEntity);
 
+      //we should not generete new hobbies but chose some from the existing ones
+      /*
         for (HobbyDTO hobbyDTO : personDTO.getHobbyList()) {
             Hobby hobby = new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription());
             person.addHobby(hobby);
         }
-        
+        */
         for (PhoneDTO phoneDTO : personDTO.getPhoneList()) {
             Phone phoneEntity = new Phone(phoneDTO.getNumber(), phoneDTO.getDescription());
-            person.getPhoneNumbers().add(phoneEntity);
+            person.addPhone(phoneEntity);
         }
         
         try {
             em.getTransaction().begin();
+            for (HobbyDTO hDTO : personDTO.getHobbyList()) {
+                Hobby h = em.find(Hobby.class, hDTO.getName());
+                person.addHobby(h);
+            }
+            
             em.persist(person);
             em.getTransaction().commit();
             return new PersonDTO(person);
@@ -95,22 +102,18 @@ public class PersonFacade implements IPersonFacade {
 
         
         EntityManager em = emf.createEntityManager();
-        try{
-            TypedQuery queryHobby = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :name", Hobby.class);
-            queryHobby.setParameter("name", hobbyName);
-            Hobby hobby = (Hobby) queryHobby.getSingleResult();
-            int hobbyID=hobby.getId();
-         //todo implement query
-            TypedQuery<Person> query =
-                    em.createQuery("", Person.class);
-            
-        return new PersonListDTO(query.getResultList());
+        try{        
+        TypedQuery query =
+                    em.createQuery("SELECT h FROM Hobby h WHERE h.name=:name", Hobby.class);
+        query.setParameter("name", hobbyName);
+        Hobby hobby = (Hobby) query.getSingleResult();
+        return new PersonListDTO(hobby.getPersonList());
         } finally {
             em.close();
         
         }
          
-     //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
 
     @Override

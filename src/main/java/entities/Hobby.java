@@ -29,18 +29,24 @@ public class Hobby implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String description;
-    @ManyToMany(cascade = CascadeType.PERSIST )
+
+    private String wikiLink;
+    @ManyToMany
     @JoinTable(name="PERSON_HOBBY") // Owning side
     private Set<Person> personList = new HashSet();
-
+    private String category;
+    private String type;
+    
+    
     public Hobby() {
     }
 
-    public Hobby(String name, String description) {
+    public Hobby(String name, String wikiLink, String category, String type) {
         this.name = name;
-        this.description = description;
+        this.wikiLink = wikiLink;
         this.personList = new HashSet<>();
+        this.category = category;
+        this.type = type;
     }
     
     public void addPerson(Person person){
@@ -58,16 +64,9 @@ public class Hobby implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public String getWikiLink() {
+        return wikiLink;
     }
 
     public Set<Person> getPersonList() {
@@ -77,6 +76,14 @@ public class Hobby implements Serializable {
     public void setPersonList(HashSet<Person> personList) {
         this.personList = personList;
     }
-    
+
+    public String getCategory() {
+        return category;
+    }
+
+
+    public String getType() {
+        return type;
+    }    
     
 }

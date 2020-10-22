@@ -11,25 +11,25 @@ import java.util.ArrayList;
  */
 public class HobbyDTO {
     private String name;
-    private String description;
+    private String wikiLink;
     private ArrayList<PersonDTO> personList;
+    private String category;
     private String type;
-    private String location;
 
     public HobbyDTO(Hobby hobby) {
         this.name = hobby.getName();
-        this.description = hobby.getDescription();
+        this.wikiLink = hobby.getWikiLink();
         this.personList = new ArrayList();
+        this.category = hobby.getCategory();
         this.type = hobby.getType();
-        this.location = hobby.getLocation();
         
     }
 
-    public HobbyDTO(String name, String description, String type, String location) {
+    public HobbyDTO(String name, String wikiLink, String category, String type) {
         this.name = name;
-        this.description = description;
+        this.wikiLink = wikiLink;
+        this.category = category;
         this.type = type;
-        this.location = location;
     }
     
     
@@ -48,17 +48,12 @@ public class HobbyDTO {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+
+    public String getWikiLink() {
+        return wikiLink;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public ArrayList<PersonDTO> getPersonList() {
         return personList;
@@ -68,21 +63,13 @@ public class HobbyDTO {
         this.personList = personList;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+
     public String getType() {
         return type;
     }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-    
     
 }

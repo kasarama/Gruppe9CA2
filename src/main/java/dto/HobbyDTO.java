@@ -10,33 +10,23 @@ import java.util.ArrayList;
  * @author magda og søren
  */
 public class HobbyDTO {
-    private String name;
-    private String description;
-    private ArrayList<PersonDTO> personList;
+   private String name;
+    private String wikiLink;
+    private String category;
+    private String type;
 
     public HobbyDTO(Hobby hobby) {
         this.name = hobby.getName();
-        this.description = hobby.getDescription();
-        this.personList = new ArrayList();
-        
+        this.wikiLink = hobby.getWikiLink();
+        this.category = hobby.getCategory();
+        this.type = hobby.getType();        
     }
 
-    public HobbyDTO(String name, String description) {
+    public HobbyDTO(String name) {
         this.name = name;
-        this.description = description;
     }
     
     
-    /*
-    public ArrayList<PersonDTO> convertAllPerson(ArrayList<Person> persons){
-        ArrayList personsDTO = new ArrayList<PersonDTO>();
-        for (Person person : persons) {
-            
-            
-            
-        }
-    }
-    */
 
     public String getName() {
         return name;
@@ -46,20 +36,33 @@ public class HobbyDTO {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getWikiLink() {
+        return wikiLink;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setWikiLink(String wikiLink) {
+        this.wikiLink = wikiLink;
     }
 
-    public ArrayList<PersonDTO> getPersonList() {
-        return personList;
+    public String getCategory() {
+        return category;
     }
 
-    public void setPersonList(ArrayList<PersonDTO> personList) {
-        this.personList = personList;
+    public void setCategory(String category) {
+        this.category = category;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    
+    
+    
+   
     
 }

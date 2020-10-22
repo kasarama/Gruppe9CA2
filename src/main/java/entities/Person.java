@@ -31,7 +31,6 @@ public class Person implements Serializable {
     private String firstName;
     private String lastName;
     
-   // @OneToMany(mappedBy = "personList", cascade = CascadeType.PERSIST)
     @OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
     private List<Phone> phoneNumbers;
     

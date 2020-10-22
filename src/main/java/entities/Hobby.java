@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,22 +27,19 @@ public class Hobby implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(length = 50)
     private String name;
-    private String description;
+    private String wikiLink;
+    private String category;
+    private String type;   
     @ManyToMany(cascade = CascadeType.PERSIST )
     @JoinTable(name="PERSON_HOBBY") // Owning side
     private Set<Person> personList = new HashSet();
 
+        
     public Hobby() {
     }
-
-    public Hobby(String name, String description) {
-        this.name = name;
-        this.description = description;
-        this.personList = new HashSet<>();
-    }
+   
     
     public void addPerson(Person person){
         this.personList.add(person);
@@ -49,34 +47,37 @@ public class Hobby implements Serializable {
         person.addHobby(this);
         }
     }
-    
-    public Integer getId() {
-        return id;
+
+    public Hobby(String name, String wikiLink, String category, String type) {
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
     }
+     
+   
 
     public String getName() {
         return name;
+    }   
+
+    public String getWikiLink() {
+        return wikiLink;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCategory() {
+        return category;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public String getType() {
+        return type;
+    }  
 
     public Set<Person> getPersonList() {
         return personList;
     }
 
-    public void setPersonList(HashSet<Person> personList) {
-        this.personList = personList;
-    }
+   
     
     
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,9 +27,9 @@ public class Hobby implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(length = 50)
     private String name;
+
 
     private String wikiLink;
     @ManyToMany
@@ -41,13 +42,7 @@ public class Hobby implements Serializable {
     public Hobby() {
     }
 
-    public Hobby(String name, String wikiLink, String category, String type) {
-        this.name = name;
-        this.wikiLink = wikiLink;
-        this.personList = new HashSet<>();
-        this.category = category;
-        this.type = type;
-    }
+  
     
     public void addPerson(Person person){
         this.personList.add(person);
@@ -55,35 +50,42 @@ public class Hobby implements Serializable {
         person.addHobby(this);
         }
     }
-    
-    public Integer getId() {
-        return id;
+
+    public Hobby(String name, String wikiLink, String category, String type) {
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
     }
+     
+   
 
     public String getName() {
         return name;
-    }
+    }   
 
 
     public String getWikiLink() {
         return wikiLink;
     }
 
-    public Set<Person> getPersonList() {
-        return personList;
+    public String getCategory() {
+        return category;
     }
+
+    public String getType() {
+        return type;
+    }  
 
     public void setPersonList(HashSet<Person> personList) {
         this.personList = personList;
     }
 
-    public String getCategory() {
-        return category;
+    public Set<Person> getPersonList() {
+        return this.personList;
     }
 
+    
 
-    public String getType() {
-        return type;
-    }    
     
 }

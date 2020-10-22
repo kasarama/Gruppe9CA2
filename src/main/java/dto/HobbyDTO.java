@@ -29,47 +29,56 @@ public class HobbyDTO {
         this.name = name;
         this.wikiLink = wikiLink;
         this.category = category;
-        this.type = type;
+        this.type = type;          
+    }
+
+    public HobbyDTO(String name) {
+        this.name = name;
+
     }
     
     
-    /*
-    public ArrayList<PersonDTO> convertAllPerson(ArrayList<Person> persons){
-        ArrayList personsDTO = new ArrayList<PersonDTO>();
-        for (Person person : persons) {
-            
-            
-            
-        }
-    }
-    */
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+
+
+
+    public ArrayList<PersonDTO> getPersonList() {
+        return personList;
+        
+    }
 
     public String getWikiLink() {
         return wikiLink;
     }
 
-
-    public ArrayList<PersonDTO> getPersonList() {
-        return personList;
-    }
-
-    public void setPersonList(ArrayList<PersonDTO> personList) {
-        this.personList = personList;
+    public void setWikiLink(String wikiLink) {
+        this.wikiLink = wikiLink;
     }
 
     public String getCategory() {
         return category;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getType() {
         return type;
     }
-    
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
+
 }

@@ -8,6 +8,7 @@ package dto;
 import entities.Person;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -20,10 +21,11 @@ public class PersonListDTO {
     public PersonListDTO() {
     }
 
-    public PersonListDTO(List<Person> personList) {
-        this.personList = new ArrayList();
+    public PersonListDTO(Set<Person> personList) {
+       
         for (Person person : personList) {
             PersonDTO personDTO = new PersonDTO(person);
+            this.personList.add(personDTO);
 
         }
     }

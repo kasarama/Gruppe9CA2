@@ -30,7 +30,7 @@ public class Phone implements Serializable {
     private Integer number;
     private String description;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "OWNER_ID")
     private Person owner;
     

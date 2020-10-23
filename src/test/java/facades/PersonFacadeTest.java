@@ -5,50 +5,44 @@ import dto.HobbyDTO;
 import dto.PersonDTO;
 import dto.PersonListDTO;
 import dto.PhoneDTO;
-import entities.Address;
-import entities.Hobby;
 import entities.Person;
+import entities.Address;
+import entities.CityInfo;
+import entities.Hobby;
 import entities.Phone;
-import entities.RenameMe;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 import utils.EMF_Creator;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Disabled;
 
 /**
  *
  * @author magda
  */
-@Disabled
 public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static PersonFacade facade;
+    private static PersonFacade personFacade;
+    private static HobbyFacade hobbyFacade;
 
     private Phone phone1 = new Phone(123123123, "private");
     private Phone phone2 = new Phone(22222222, "home");
     private Phone phone3 = new Phone(333333, "mobil");
-//    private Address address1 = new Address("Street One", "2.th", "Søborg");
-  //  private Address address2 = new Address("Street Two", "3.th", "Bagsværd");
     private Person person1;
     private Person person2;
-    private Hobby hobby1 = new Hobby("D-udskrivning", "https://en.wikipedia.org/wiki/3D_printing", "Generel", "Indendørs");
-    private Hobby hobby2 = new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");
-    private Hobby hobby3 = new Hobby("Skuespil", "https://en.wikipedia.org/wiki/Acting", "Generel", "Indendørs");
+    private String hobbyName1 = "D-udskrivning";
+    private String hobbyName2 = "Akrobatik";
 
     @BeforeAll
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        facade = PersonFacade.getPersonFacade(emf);
+        personFacade = PersonFacade.getPersonFacade(emf);
+        hobbyFacade = HobbyFacade.getHobbyFacade(emf);
         EntityManager em = emf.createEntityManager();
         Hobby hobby1 = new Hobby("D-udskrivning", "https://en.wikipedia.org/wiki/3D_printing", "Generel", "Indendørs");
         Hobby hobby2 = new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");
@@ -59,6 +53,8 @@ public class PersonFacadeTest {
             em.persist(hobby1);
             em.persist(hobby2);
             em.persist(hobby3);
+            em.persist(new CityInfo("1234"));
+            em.persist(new CityInfo("5684"));
 
             em.getTransaction().commit();
         } finally {
@@ -70,30 +66,22 @@ public class PersonFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        ArrayList<Phone> phoneL1 = new ArrayList();
-        phoneL1.add(phone1);
-        phoneL1.add(phone2);
-
-        ArrayList<Phone> phoneL2= new ArrayList();
-        phoneL1.add(phone3);
-        HashSet<Hobby> hobbyL1= new HashSet();
-        hobbyL1.add(hobby1);
-        hobbyL1.add(hobby2);
-        HashSet<Hobby> hobbyL2= new HashSet();
-        hobbyL2.add(hobby1);
 
         try {
             em.getTransaction().begin();
-
-            person1 = new Person("email@email", "Magda", "Wawrzak");//,address1);
-            person1.addHobby(em.find(Hobby.class, hobby1.getName()));
+            Address address1 = new Address("Street One", "2.th", em.find(CityInfo.class, "1234"));
+            Address address2 = new Address("Street Two", "3.th", em.find(CityInfo.class, "5684"));
+            person1 = new Person("email@email", "Magda", "Wawrzak");
+            person1.addHobby(em.find(Hobby.class, hobbyName1));
             person1.addPhone(phone1);
             person1.addPhone(phone2);
+            person1.addAddress(address1);
 
-            person2 = new Person("email@com", "Bob", "Sponge");//,  address2);
-            person2.addHobby(em.find(Hobby.class, hobby1.getName()));
-            person2.addHobby(em.find(Hobby.class, hobby2.getName()));
+            person2 = new Person("email@com", "Bob", "Sponge");
+            person2.addHobby(em.find(Hobby.class, hobbyName1));
+            person2.addHobby(em.find(Hobby.class, hobbyName2));
             person2.addPhone(phone3);
+            person1.addAddress(address2);
 
             em.persist(person1);
             em.persist(person2);
@@ -104,7 +92,6 @@ public class PersonFacadeTest {
         }
     }
 
-    
     @AfterEach
     public void tearDown() {
         EntityManager em = emf.createEntityManager();
@@ -115,13 +102,20 @@ public class PersonFacadeTest {
             em.getTransaction().commit();
 
         } finally {
-
             em.close();
         }
     }
-     
+
+    @Test
+    public void testGetPersonListByHobby() {
+
+        PersonListDTO result = hobbyFacade.getPersonList(hobbyName1);
+        assertEquals(result.getList().size(), 2);
+    }
+
     @Test
     public void testAddPerson() {
+
         PersonDTO personDTO = new PersonDTO();
         AddressDTO addressDTO = new AddressDTO("Sesam Strrt", "666.sd");
         ArrayList<HobbyDTO> hobbyList = new ArrayList();
@@ -139,14 +133,7 @@ public class PersonFacadeTest {
         personDTO.setHobbyList(hobbyList);
         personDTO.setPhoneList(phoneList);
 
-        assertTrue("Elmo".equals(facade.addPerson(personDTO).getFirstName()), "Expects two rows in the database");
+        assertTrue("Elmo".equals(personFacade.addPerson(personDTO).getFirstName()), "Expects two rows in the database");
     }
 
-   // @Disabled
-    @Test
-    public void testGetPersonListByHobby() {
-        String hobbyName = hobby1.getName();
-        PersonListDTO result = facade.getPersonListByHobby(hobbyName);
-        assertEquals(result.getList().size(), 2);
-    }
 }

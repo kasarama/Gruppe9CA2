@@ -32,7 +32,7 @@ public class Person implements Serializable {
     private String lastName;
     
     @OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
-    private List<Phone> phoneNumbers;
+    private List<Phone> phoneNumbers = new ArrayList();
     
     @ManyToMany (mappedBy = "personList", cascade = CascadeType.PERSIST)
     private Set<Hobby> hobbyList = new HashSet<>();

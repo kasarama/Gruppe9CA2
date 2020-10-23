@@ -130,7 +130,6 @@ public class PersonFacade implements IPersonFacade {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    @Override
     public PersonDTO deletePerson(int id){
         
         EntityManager em = emf.createEntityManager();

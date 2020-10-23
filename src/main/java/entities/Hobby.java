@@ -6,10 +6,8 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,25 +27,21 @@ public class Hobby implements Serializable {
     @Id
     @Column(length = 50)
     private String name;
-
-
     private String wikiLink;
-    @ManyToMany
-    @JoinTable(name="PERSON_HOBBY") // Owning side
-    private Set<Person> personList = new HashSet();
     private String category;
     private String type;
-    
-    
+
+    @ManyToMany
+    @JoinTable(name = "PERSON_HOBBY") // Owning side
+    private Set<Person> personList = new HashSet();
+
     public Hobby() {
     }
 
-  
-    
-    public void addPerson(Person person){
+    public void addPerson(Person person) {
         this.personList.add(person);
-        if(!person.getHobbyList().contains(this)){
-        person.addHobby(this);
+        if (!person.getHobbyList().contains(this)) {
+            person.addHobby(this);
         }
     }
 
@@ -57,13 +51,10 @@ public class Hobby implements Serializable {
         this.category = category;
         this.type = type;
     }
-     
-   
 
     public String getName() {
         return name;
-    }   
-
+    }
 
     public String getWikiLink() {
         return wikiLink;
@@ -75,7 +66,7 @@ public class Hobby implements Serializable {
 
     public String getType() {
         return type;
-    }  
+    }
 
     public void setPersonList(HashSet<Person> personList) {
         this.personList = personList;
@@ -85,7 +76,4 @@ public class Hobby implements Serializable {
         return this.personList;
     }
 
-    
-
-    
 }

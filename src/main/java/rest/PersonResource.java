@@ -75,4 +75,14 @@ public class PersonResource {
     public String demo() {
         return "{\"msg\":\"Hello World\"}";
     }
+    
+    @Path("allperson")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String allPersons() {
+        
+        return new Gson().toJson(FACADE.getAllPersons().getList());
+    }
+    
+    
 }

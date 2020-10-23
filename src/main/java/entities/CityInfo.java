@@ -29,6 +29,15 @@ public class CityInfo implements Serializable {
 
     public CityInfo(String zipCode) {
         this.zipCode = zipCode;
+        this.city = "Default"; 
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public String getCity() {
+        return city;
     }
     
 }

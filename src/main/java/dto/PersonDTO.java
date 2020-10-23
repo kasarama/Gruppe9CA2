@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * @author magda og søren
  */
 public class PersonDTO {
+
     private Integer id;
     private String firstName;
     private String lastName;
@@ -21,13 +22,22 @@ public class PersonDTO {
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
         this.email = person.getEmail();
-        this.phoneList = new ArrayList();
-        this.hobbyList = new ArrayList();
+        this.phoneList=new ArrayList<>();
+        person.getPhoneNumbers().forEach(phone -> {
+            this.phoneList.add(new PhoneDTO(phone));
+        });
+        this.hobbyList= new ArrayList<>();
+        person.getHobbyList().forEach(hobby -> {
+            this.hobbyList.add(new HobbyDTO(hobby));
+        });
+        this.address = new AddressDTO(person.getAddress());
     }
+
+   
 
     public PersonDTO() {
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -83,8 +93,5 @@ public class PersonDTO {
     public void setAddress(AddressDTO address) {
         this.address = address;
     }
-    
-    
-    
-    
+
 }

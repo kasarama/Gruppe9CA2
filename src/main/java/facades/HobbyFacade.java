@@ -5,10 +5,15 @@
  */
 package facades;
 
+import dto.HobbyDTO;
 import dto.PersonListDTO;
 import entities.Hobby;
+import entities.Person;
+import java.util.ArrayList;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -41,6 +46,26 @@ public class HobbyFacade {
 
         }
 
+    }
+    
+     public ArrayList<HobbyDTO> getAllHobbies(){
+         EntityManager em = emf.createEntityManager();
+         try {
+            em.getTransaction().begin();
+            
+            
+            TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h", Hobby.class);
+            ArrayList<Hobby> allHobbies = (ArrayList<Hobby>) query.getResultList();
+            ArrayList<HobbyDTO> hobbyDTOList = new ArrayList();
+             for (Hobby hobby : allHobbies) {
+                 hobbyDTOList.add(new HobbyDTO(hobby));
+             }
+            
+            return hobbyDTOList;
+            
+         }finally {
+             em.close();
+         }
     }
     
 }

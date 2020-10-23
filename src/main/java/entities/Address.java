@@ -11,15 +11,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -123,25 +120,5 @@ public class Address implements Serializable {
         }
     }
 
-    public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-        EntityManager em = emf.createEntityManager();
-
-        Person p1 = new Person("email", "Bob", "Belcher");
-        CityInfo c1 = new CityInfo("3401");
-        Address a1 = new Address("Some street", "AdditionalInfo", c1);
-        //p1.addAddress(a1);
-        // a1.addPerson(p1);
-        try {
-            em.getTransaction().begin();
-            em.persist(c1);
-            em.persist(p1);
-            em.persist(a1);
-
-            em.getTransaction().commit();
-
-        } finally {
-            em.close(); //We close this every request. We keep open the factory
-        }
-    }
+   
 }

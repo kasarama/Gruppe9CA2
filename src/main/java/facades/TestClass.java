@@ -19,7 +19,7 @@ public class TestClass {
         EntityManager em = emf.createEntityManager();
         PersonFacade personFacade = PersonFacade.getPersonFacade(emf);
         PersonDTO personDTO = new PersonDTO();
-        AddressDTO addressDTO = new AddressDTO("Sesam Strrt","666.sd");
+        AddressDTO addressDTO = new AddressDTO("Sesam Strrt","666.sd","0800");
         ArrayList<HobbyDTO> hobbyList = new ArrayList();
         ArrayList<PhoneDTO> phoneList = new ArrayList();
         personDTO.setAddress(addressDTO);

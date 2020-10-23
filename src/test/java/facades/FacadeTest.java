@@ -18,13 +18,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import utils.EMF_Creator;
 
 /**
  *
  * @author magda
  */
-public class PersonFacadeTest {
+public class FacadeTest {
 
     private static EntityManagerFactory emf;
     private static PersonFacade personFacade;
@@ -51,7 +52,7 @@ public class PersonFacadeTest {
         try {
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Phone").executeUpdate();
-            //  em.createQuery("DELETE FROM Address").executeUpdate();
+           // em.createQuery("DELETE FROM Address").executeUpdate();
             em.createQuery("DELETE FROM Person").executeUpdate();
             em.createQuery("DELETE FROM Address").executeUpdate();
 
@@ -80,9 +81,9 @@ public class PersonFacadeTest {
             Address address2 = new Address("Street Two", "3.th", em.find(CityInfo.class, "5684"));
 
             em.createQuery("DELETE FROM Phone").executeUpdate();
+            
             em.createQuery("DELETE FROM Address").executeUpdate();
             em.createQuery("DELETE FROM Person").executeUpdate();
-
             person1 = new Person("email@email", "Magda", "Wawrzak");
             person1.addHobby(em.find(Hobby.class, hobbyName1));
             person1.addPhone(phone1);
@@ -113,14 +114,15 @@ public class PersonFacadeTest {
             em.createQuery("DELETE FROM Phone").executeUpdate();
             em.createQuery("DELETE FROM Person").executeUpdate();
             em.createQuery("DELETE FROM Address").executeUpdate();
-            em.createQuery("DELETE FROM CityInfo").executeUpdate();
+            
             em.getTransaction().commit();
 
         } finally {
             em.close();
         }
     }
-
+    
+    @Disabled
     @Test
     public void testGetPersonListByHobby() {
 
@@ -132,7 +134,7 @@ public class PersonFacadeTest {
     public void testAddPerson() {
 
         PersonDTO personDTO = new PersonDTO();
-        AddressDTO addressDTO = new AddressDTO("Sesam Strrt", "666.sd");
+        AddressDTO addressDTO = new AddressDTO("Sesame Strrt", "666.sd","1234");
         ArrayList<HobbyDTO> hobbyList = new ArrayList();
 
         hobbyList.add(new HobbyDTO("Akrobatik"));
@@ -147,8 +149,13 @@ public class PersonFacadeTest {
         personDTO.setLastName("Blue");
         personDTO.setHobbyList(hobbyList);
         personDTO.setPhoneList(phoneList);
-
-        assertTrue("Elmo".equals(personFacade.addPerson(personDTO).getFirstName()), "Expects two rows in the database");
+        
+        PersonDTO result;
+        result = personFacade.addPerson(personDTO);
+        System.out.println(result.getAddress().getStreet());
+        assertTrue("Elmo".equals(result.getFirstName()), "Expects two rows in the database");
+        assertTrue(result.getAddress().getCity().equals("Default"));
+        assertTrue(result.getAddress().getStreet().equals("Sesame Strrt"));
     }
 
 }

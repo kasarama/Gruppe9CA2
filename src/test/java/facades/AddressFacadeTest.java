@@ -23,7 +23,11 @@ public class AddressFacadeTest {
 
     private static EntityManagerFactory emf;
     private static AddressFacade facade;
-
+    private static Person p1;
+    private static Person p2;
+    private static CityInfo c1;
+    private static Address a1;
+    
     public AddressFacadeTest() {
     }
 
@@ -31,6 +35,12 @@ public class AddressFacadeTest {
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = AddressFacade.getAddressFacade(emf);
+         p1 = new Person("email", "Bob", "Belcher");
+         p2 = new Person("email", "Linda", "Belcher");
+        c1 = new CityInfo("3401");
+        a1 = new Address("Some street", "AdditionalInfo", c1);
+        p1.addAddress(a1);
+        p2.addAddress(a1);
 
     }
 
@@ -44,13 +54,6 @@ public class AddressFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        Person p1 = new Person("email", "Bob", "Belcher");
-        Person p2 = new Person("email", "Linda", "Belcher");
-        CityInfo c1 = new CityInfo("3401");
-        Address a1 = new Address("Some street", "AdditionalInfo", c1);
-        p1.addAddress(a1);
-        p2.addAddress(a1);
-
         try {
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Address").executeUpdate();
@@ -72,9 +75,9 @@ public class AddressFacadeTest {
     // TODO: Delete or change this method 
     @Test
     public void testGetAllPersonsByZip() {
-    List<PersonDTO> result = facade.getAllPersonsByZip("3401");
+        List<PersonDTO> result = facade.getAllPersonsByZip("3401");
         assertNotNull(result);
-        assertEquals(result.size(),2);
+        assertEquals(result.size(), 2);
     }
 
 }

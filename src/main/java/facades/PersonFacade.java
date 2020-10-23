@@ -8,8 +8,6 @@ import entities.Address;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
-import java.util.ArrayList;
-import java.util.HashSet;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -46,9 +44,6 @@ public class PersonFacade implements IPersonFacade {
             Phone phoneEntity = new Phone(phoneDTO.getNumber(), phoneDTO.getDescription());
             phoneListEntity.add(phoneEntity);
         }
-        
-        
-        
 
         HashSet<Hobby> hobbyListEntity = new HashSet();
         for (HobbyDTO hobbyDTO : personDTO.getHobbyList()) {
@@ -94,13 +89,27 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public PersonDTO editPerson(PersonDTO p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = emf.createEntityManager();
+        PersonDTO editedPersonDTO;
+        try{
+            em.getTransaction().begin();
+            Person person = em.find(Person.class, p.getId());
+            
+            person.setEmail(p.getEmail());
+            person.setFirstName(p.getFirstName());
+            person.setLastName(p.getLastName());
+            editedPersonDTO = new PersonDTO(person);
+            em.getTransaction().commit();
+            return editedPersonDTO;
+        }
+        finally{
+            em.close();
+        }
     }
 
     @Override
     public PersonListDTO getPersonListByHobby(String hobbyName) {
-
-        
+ 
         EntityManager em = emf.createEntityManager();
         try{        
         TypedQuery query =
@@ -120,5 +129,24 @@ public class PersonFacade implements IPersonFacade {
     public PersonDTO getPersonByNumber(int number) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public PersonDTO deletePerson(int id){
+        
+        EntityManager em = emf.createEntityManager();
+                Person p = em.find(Person.class, id);
+       
+        PersonDTO dto = new PersonDTO(p);
 
+        try {
+            em.getTransaction().begin();
+            em.remove(p);
+            em.getTransaction().commit();
+          //  System.out.println(dto.toString());
+            return dto;
+
+        } finally {
+            em.close();
+        }
+    }
 }

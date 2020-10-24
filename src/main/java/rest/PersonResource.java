@@ -117,4 +117,12 @@ public class PersonResource {
         return GSON.toJson(FACADE.personsPhoneList(id).getPhoneList());
     }
     
+    
+    @Path("deletephone/{number}&{id}")
+    @DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+    public String deletePhone(@PathParam("id") int id, @PathParam("number") int number){
+        return GSON.toJson(FACADE.deletePhone(id, number).getPhoneList());
+    }
+    
 }

@@ -135,7 +135,7 @@ public class PersonFacade implements IPersonFacade {
         }
     }
 
-    public long countPeopleWithHobby(String hobbyName) {
+    public int countPeopleWithHobby(String hobbyName) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -184,11 +184,16 @@ public class PersonFacade implements IPersonFacade {
     //todo implement endpoints for the following methods
     public PhoneListDTO deletePhone(int id, int number) {
         EntityManager em = emf.createEntityManager();
-
+        System.out.println("Given phone: "+number+"\ngiven id: "+id);
         try {
+            System.out.println("trying hard");
             em.getTransaction().begin();
+            System.out.println("Transaktion started");
+            
             Person person = em.find(Person.class, id);
-
+            System.out.println("...---...");
+            System.out.println("prson found: "+person.getFirstName());
+            System.out.println("Found person has somenumbers?: "+person.getPhoneNumbers().size());
             Phone phone = new Phone();
             for (Phone existing : person.getPhoneNumbers()) {
                 if (existing.getNumber() == number) {

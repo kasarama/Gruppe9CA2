@@ -5,11 +5,9 @@
  */
 package entities;
 
+import dto.PhoneDTO;
 import java.io.Serializable;
-import java.util.ArrayList;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +39,13 @@ public class Phone implements Serializable {
     public Phone(Integer number, String description) {
         this.number = number;
         this.description = description;
+        
+    }
+
+    public Phone(PhoneDTO phoneDTO) {
+        
+        this.number = phoneDTO.getNumber();
+        this.description = phoneDTO.getDescription();
         
     }
     

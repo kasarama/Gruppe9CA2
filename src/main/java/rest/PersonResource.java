@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.PersonDTO;
 import facades.AddressFacade;
+import facades.HobbyFacade;
 import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Produces;
@@ -38,6 +39,7 @@ public class PersonResource {
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final PersonFacade FACADE = PersonFacade.getPersonFacade(EMF);
     private static final AddressFacade ADDRESFACADE = AddressFacade.getAddressFacade(EMF);
+    private static final HobbyFacade HOBBYFACADE = HobbyFacade.getHobbyFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     
     @POST
@@ -78,7 +80,7 @@ public class PersonResource {
         return "{\"msg\":\"Hello World\"}";
     }
     
-    @Path("allpersons")
+    @Path("allpeople")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String allPeople() {
@@ -93,5 +95,26 @@ public class PersonResource {
         return new Gson().toJson(ADDRESFACADE.getallFromCity(city).getList());
     }
     
+    @Path("quantityofliking/{hobby}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String allPeopleLiking(@PathParam("hobby") String hobbyName){
+        return new Gson().toJson(FACADE.countPeopleWithHobby(hobbyName));
+    }
+    
+    @Path("hobbylist/{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String hobbyListOfPerson(@PathParam("id") int id){
+        return new Gson().toJson(FACADE.personsHobbyList(id).getList());
+    }
+    
+    
+    @Path("phonelist/{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String phoneListOfPerson(@PathParam("id") int id){
+        return new Gson().toJson(FACADE.personsPhoneList(id).getPhoneList());
+    }
     
 }

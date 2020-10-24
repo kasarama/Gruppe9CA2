@@ -56,15 +56,19 @@ public class PersonFacade implements IPersonFacade {
 
             Person person = new Person(personDTO.getEmail(), personDTO.getFirstName(), personDTO.getLastName(), addressEntity);
 
-            for (PhoneDTO phoneDTO : personDTO.getPhoneList()) {
-                Phone phoneEntity = new Phone(phoneDTO.getNumber(), phoneDTO.getDescription());
-                person.addPhone(phoneEntity);
-            }
-            for (HobbyDTO hDTO : personDTO.getHobbyList()) {
-                Hobby h = em.find(Hobby.class, hDTO.getName());
-                person.addHobby(h);
+            if (personDTO.getPhoneList() != null) {
+                for (PhoneDTO phoneDTO : personDTO.getPhoneList()) {
+                    Phone phoneEntity = new Phone(phoneDTO.getNumber(), phoneDTO.getDescription());
+                    person.addPhone(phoneEntity);
+                }
             }
 
+            if (personDTO.getHobbyList() != null) {
+                for (HobbyDTO hDTO : personDTO.getHobbyList()) {
+                    Hobby h = em.find(Hobby.class, hDTO.getName());
+                    person.addHobby(h);
+                }
+            }
             em.persist(person);
             em.getTransaction().commit();
             return new PersonDTO(person);

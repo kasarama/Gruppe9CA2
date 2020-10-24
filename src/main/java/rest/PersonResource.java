@@ -9,8 +9,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.HobbyDTO;
 import dto.PersonDTO;
+import dto.PersonListDTO;
 import dto.PhoneDTO;
 import dto.PhoneListDTO;
+import facades.AddressFacade;
+import facades.HobbyFacade;
 import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Produces;
@@ -39,6 +42,8 @@ public class PersonResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final PersonFacade FACADE = PersonFacade.getPersonFacade(EMF);
+    private static final HobbyFacade FACADEHOBBY = HobbyFacade.getHobbyFacade(EMF);
+    private static final AddressFacade FACADEADDRESS = AddressFacade.getAddressFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     
     @POST
@@ -159,4 +164,18 @@ public class PersonResource {
         return GSON.toJson(FACADE.addHobby(id, hobby.getName()).getList());
     }
     
+    @Path("personlist/{name}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllPersonsByHobby(@PathParam("name") String name) {
+        PersonListDTO list = FACADEHOBBY.getPersonList(name);
+        return GSON.toJson(list.getList());
+    }
+    
+       @Path("peoplebyzip/{zip}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPeopleByZip(@PathParam("zip") String zip){
+        return GSON.toJson(FACADEADDRESS.getAllPersonsByZip(zip));
+    }
 }

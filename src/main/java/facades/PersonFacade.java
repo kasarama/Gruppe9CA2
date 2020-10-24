@@ -135,4 +135,14 @@ public class PersonFacade implements IPersonFacade {
              em.close();
          }
     }
+    
+    /*
+    Get information about a person (address, hobbies etc) given a phone number
+Get all persons living in a given city (i.e. 2800 Lyngby)
+Get the number of people with a given hobby
+Get a list of all zip codes in Denmark
+Create new Persons
+Edit Persons
+
+    */
 }

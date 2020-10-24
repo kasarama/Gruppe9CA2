@@ -3,10 +3,13 @@ package facades;
 import dto.AddressDTO;
 //import dto.CityInfoDTO;
 import dto.PersonDTO;
+import dto.PersonListDTO;
 import entities.Address;
 import entities.Person;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -15,7 +18,7 @@ import javax.ws.rs.NotFoundException;
 
 /**
  *
- * @author Selina A.S.
+ * @author Selina A.S. and Magda
  */
 public class AddressFacade {
 
@@ -104,5 +107,18 @@ public class AddressFacade {
         } finally {
             em.close();
         }
+    }
+    
+    public PersonListDTO getallFromCity(String city){
+                EntityManager em = emf.createEntityManager();
+                TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a "
+                        + "JOIN a.cityInfo c WHERE c.city=:city", 
+                        Person.class).setParameter("city",city);
+                Set<Person> result = new HashSet();
+                for (Person person : query.getResultList()) {
+                    result.add(person);
+        }
+                return new PersonListDTO(result);
+
     }
 }

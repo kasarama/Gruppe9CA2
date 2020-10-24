@@ -8,6 +8,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.PersonDTO;
+import facades.AddressFacade;
 import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Produces;
@@ -36,6 +37,7 @@ public class PersonResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final PersonFacade FACADE = PersonFacade.getPersonFacade(EMF);
+    private static final AddressFacade ADDRESFACADE = AddressFacade.getAddressFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     
     @POST
@@ -76,12 +78,19 @@ public class PersonResource {
         return "{\"msg\":\"Hello World\"}";
     }
     
-    @Path("allperson")
+    @Path("allpersons")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String allPersons() {
+    public String allPeople() {
         
         return new Gson().toJson(FACADE.getAllPersons().getList());
+    }
+    
+    @Path("livingin/{city}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String allPeopleInCity(@PathParam("city") String city){
+        return new Gson().toJson(ADDRESFACADE.getallFromCity(city).getList());
     }
     
     

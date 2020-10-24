@@ -51,7 +51,7 @@ public class PersonResource {
         PersonDTO addedPerson = FACADE.addPerson(newPerson);
         
         
-        return new Gson().toJson(addedPerson);
+        return GSON.toJson(addedPerson);
     }
     
     @PUT
@@ -71,7 +71,7 @@ public class PersonResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteById(@PathParam("id") int id){
         PersonDTO deleted = FACADE.deletePerson(id);
-        return new Gson().toJson(deleted);
+        return GSON.toJson(deleted);
     }
     
     @GET
@@ -85,28 +85,28 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     public String allPeople() {
         
-        return new Gson().toJson(FACADE.getAllPersons().getList());
+        return GSON.toJson(FACADE.getAllPersons().getList());
     }
     
     @Path("livingin/{city}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String allPeopleInCity(@PathParam("city") String city){
-        return new Gson().toJson(ADDRESFACADE.getallFromCity(city).getList());
+        return GSON.toJson(ADDRESFACADE.getallFromCity(city).getList());
     }
     
     @Path("quantityofliking/{hobby}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String allPeopleLiking(@PathParam("hobby") String hobbyName){
-        return new Gson().toJson(FACADE.countPeopleWithHobby(hobbyName));
+        return GSON.toJson(FACADE.countPeopleWithHobby(hobbyName));
     }
     
     @Path("hobbylist/{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String hobbyListOfPerson(@PathParam("id") int id){
-        return new Gson().toJson(FACADE.personsHobbyList(id).getList());
+        return GSON.toJson(FACADE.personsHobbyList(id).getList());
     }
     
     
@@ -114,7 +114,7 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String phoneListOfPerson(@PathParam("id") int id){
-        return new Gson().toJson(FACADE.personsPhoneList(id).getPhoneList());
+        return GSON.toJson(FACADE.personsPhoneList(id).getPhoneList());
     }
     
 }

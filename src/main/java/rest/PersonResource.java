@@ -99,12 +99,14 @@ public class PersonResource {
         return GSON.toJson(FACADE.getallFromCity(city).getList());
     }
     
+    
     @Path("quantityofliking/{hobby}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String allPeopleLiking(@PathParam("hobby") String hobbyName){
         return GSON.toJson(FACADE.countPeopleWithHobby(hobbyName));
     }
+    
     
     @Path("hobbylist/{id}")
     @GET
@@ -172,10 +174,17 @@ public class PersonResource {
         return GSON.toJson(list.getList());
     }
     
-       @Path("peoplebyzip/{zip}")
+    @Path("peoplebyzip/{zip}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String getPeopleByZip(@PathParam("zip") String zip){
         return GSON.toJson(FACADEADDRESS.getAllPersonsByZip(zip));
+    }
+    
+    @Path("allzipcodes/")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getAllZipCodes(){
+        return GSON.toJson(FACADEADDRESS.getAllZipCodes());
     }
 }

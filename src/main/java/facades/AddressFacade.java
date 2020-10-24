@@ -1,7 +1,7 @@
 package facades;
 
 import dto.AddressDTO;
-//import dto.CityInfoDTO;
+import dto.CityInfoDTO;
 import dto.PersonDTO;
 import dto.PersonListDTO;
 import entities.Address;
@@ -80,15 +80,16 @@ public class AddressFacade {
 //            em.close();
 //        }
 //    }
-//public List<CityInfoDTO> getAllZipCodes(){
-//    EntityManager em = emf.createEntityManager();
-//    try {
-//        List<CityInfoDTO> list = em.createQuery("SELECT c FROM CityInfo c").getResultList();
-//        return list;
-//    } finally {
-//        em.close();
-//    }
-//}
+    
+public List<CityInfoDTO> getAllZipCodes(){
+    EntityManager em = emf.createEntityManager();
+    try {
+        List<CityInfoDTO> list = em.createQuery("SELECT c FROM CityInfo c").getResultList();
+        return list;
+    } finally {
+        em.close();
+    }
+}
 
     public List<PersonDTO> getAllPersonsByZip(String zipCode) throws NotFoundException {
         EntityManager em = emf.createEntityManager();

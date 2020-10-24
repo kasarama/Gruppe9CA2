@@ -91,6 +91,14 @@ public class PersonResource {
         
         return GSON.toJson(FACADE.getAllPersons().getList());
     }
+    //allhobbylist
+     @Path("allhobbylist")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String allHobbyList() {
+        
+        return GSON.toJson(FACADEHOBBY.getAllHobbies());
+    }
     
     @Path("livingin/{city}")
     @GET

@@ -55,9 +55,9 @@ public class HobbyFacade {
             
             
             TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h", Hobby.class);
-            ArrayList<Hobby> allHobbies = (ArrayList<Hobby>) query.getResultList();
+          //  ArrayList<Hobby> allHobbies = (ArrayList<Hobby>) query.getResultList();
             ArrayList<HobbyDTO> hobbyDTOList = new ArrayList();
-             for (Hobby hobby : allHobbies) {
+             for (Hobby hobby : query.getResultList()) {
                  hobbyDTOList.add(new HobbyDTO(hobby));
              }
             

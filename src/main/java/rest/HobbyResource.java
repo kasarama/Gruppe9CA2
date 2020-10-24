@@ -58,8 +58,10 @@ public class HobbyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllPersonsByHobby(@PathParam("name") String name) {
         PersonListDTO list = FACADE.getPersonList(name);
-        return new Gson().toJson(list.getList());
+        return GSON.toJson(list.getList());
     }
+    
+    
 
   
 }

@@ -109,16 +109,5 @@ public class AddressFacade {
         }
     }
     
-    public PersonListDTO getallFromCity(String city){
-                EntityManager em = emf.createEntityManager();
-                TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a "
-                        + "JOIN a.cityInfo c WHERE c.city=:city", 
-                        Person.class).setParameter("city",city);
-                Set<Person> result = new HashSet();
-                for (Person person : query.getResultList()) {
-                    result.add(person);
-        }
-                return new PersonListDTO(result);
-
-    }
+    
 }

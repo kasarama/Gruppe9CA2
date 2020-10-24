@@ -7,9 +7,10 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.HobbyDTO;
 import dto.PersonDTO;
-import facades.AddressFacade;
-import facades.HobbyFacade;
+import dto.PhoneDTO;
+import dto.PhoneListDTO;
 import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Produces;
@@ -38,8 +39,6 @@ public class PersonResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final PersonFacade FACADE = PersonFacade.getPersonFacade(EMF);
-    private static final AddressFacade ADDRESFACADE = AddressFacade.getAddressFacade(EMF);
-    private static final HobbyFacade HOBBYFACADE = HobbyFacade.getHobbyFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     
     @POST
@@ -92,7 +91,7 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String allPeopleInCity(@PathParam("city") String city){
-        return GSON.toJson(ADDRESFACADE.getallFromCity(city).getList());
+        return GSON.toJson(FACADE.getallFromCity(city).getList());
     }
     
     @Path("quantityofliking/{hobby}")
@@ -117,12 +116,47 @@ public class PersonResource {
         return GSON.toJson(FACADE.personsPhoneList(id).getPhoneList());
     }
     
-    
-    @Path("deletephone/{number}&{id}")
+    //checked
+    @Path("deletephone/{id}")
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})
-    public String deletePhone(@PathParam("id") int id, @PathParam("number") int number){
-        return GSON.toJson(FACADE.deletePhone(id, number).getPhoneList());
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String deletePhone(@PathParam("id") int id, String phoneJson){        
+        PhoneDTO phone =GSON.fromJson(phoneJson, PhoneDTO.class);       
+        return GSON.toJson(FACADE.deletePhone(id, phone.getNumber()).getPhoneList());
+    }
+    
+    //checked
+    @Path("deletehobby/{name}&{id}")
+    @DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+    public String deleteHobby(@PathParam("id") int id, @PathParam("name") String name){
+        return GSON.toJson(FACADE.deleteHobby(id, name).getList());
+    }
+    
+    //checked
+    @Path("addphone/{id}")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String addPhone(String phoneJson, @PathParam("id")int id){
+        
+        PhoneDTO newPhone = GSON.fromJson(phoneJson, PhoneDTO.class);
+        
+       PhoneListDTO phoneList = FACADE.addPhone(id,newPhone);
+        
+        
+        return GSON.toJson(phoneList.getPhoneList());
+    }
+    //checked
+    @Path("addhobby/{id}")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String addHobby(String hobbyJson, @PathParam("id")int id){
+      HobbyDTO hobby = GSON.fromJson(hobbyJson, HobbyDTO.class);
+        
+        return GSON.toJson(FACADE.addHobby(id, hobby.getName()).getList());
     }
     
 }

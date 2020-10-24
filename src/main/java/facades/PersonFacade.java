@@ -53,7 +53,7 @@ public class PersonFacade implements IPersonFacade {
             em.getTransaction().begin();
 
             addressEntity.setCityInfo(em.find(CityInfo.class, personDTO.getAddress().getZip()));
-            System.out.println("addressEntity info: " + addressEntity.getCityInfo().getCity());
+
             Person person = new Person(personDTO.getEmail(), personDTO.getFirstName(), personDTO.getLastName(), addressEntity);
 
             for (PhoneDTO phoneDTO : personDTO.getPhoneList()) {
@@ -109,7 +109,7 @@ public class PersonFacade implements IPersonFacade {
             em.getTransaction().begin();
             em.remove(p);
             em.getTransaction().commit();
-              
+
             return dto;
 
         } finally {
@@ -181,23 +181,32 @@ public class PersonFacade implements IPersonFacade {
 
     }
 
+    public PersonListDTO getallFromCity(String city) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a "
+                + "JOIN a.cityInfo c WHERE c.city=:city",
+                Person.class).setParameter("city", city);
+        Set<Person> result = new HashSet();
+        for (Person person : query.getResultList()) {
+            result.add(person);
+        }
+        return new PersonListDTO(result);
+
+    }
+
     //todo implement endpoints for the following methods
     public PhoneListDTO deletePhone(int id, int number) {
         EntityManager em = emf.createEntityManager();
-        System.out.println("Given phone: "+number+"\ngiven id: "+id);
+
         try {
-            System.out.println("trying hard");
             em.getTransaction().begin();
-            System.out.println("Transaktion started");
-            
             Person person = em.find(Person.class, id);
-            System.out.println("...---...");
-            System.out.println("prson found: "+person.getFirstName());
-            System.out.println("Found person has somenumbers?: "+person.getPhoneNumbers().size());
+
             Phone phone = new Phone();
             for (Phone existing : person.getPhoneNumbers()) {
                 if (existing.getNumber() == number) {
                     phone = existing;
+                    em.remove(existing);
                 }
             }
             person.getPhoneNumbers().remove(phone);
@@ -256,7 +265,9 @@ public class PersonFacade implements IPersonFacade {
         try {
             em.getTransaction().begin();
             Person person = em.find(Person.class, id);
+
             Hobby hobby = em.find(Hobby.class, hobbyName);
+
             person.addHobby(hobby);
 
             em.getTransaction().commit();
@@ -270,5 +281,4 @@ public class PersonFacade implements IPersonFacade {
         }
     }
 
- 
 }

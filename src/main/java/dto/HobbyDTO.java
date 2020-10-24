@@ -4,6 +4,7 @@ package dto;
 import entities.Hobby;
 import entities.Person;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *

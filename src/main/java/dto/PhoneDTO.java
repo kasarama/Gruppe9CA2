@@ -16,7 +16,7 @@ public class PhoneDTO {
         this.description = phone.getDescription();
     }
 
-    public PhoneDTO(Integer number, String description) {
+    public PhoneDTO(int number, String description) {
         this.number = number;
         this.description = description;
     }
@@ -24,7 +24,7 @@ public class PhoneDTO {
     
 
     public Integer getNumber() {
-        return number;
+        return this.number;
     }
 
     public void setNumber(Integer number) {

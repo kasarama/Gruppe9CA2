@@ -28,7 +28,7 @@ import utils.EMF_Creator;
 /**
  * REST Web Service
  *
- * @author zarpy
+ * @author Søren and Magda
  */
 @Path("person")
 public class PersonResource {

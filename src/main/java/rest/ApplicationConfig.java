@@ -20,6 +20,9 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(errorhandling.GenericExceptionMapper.class);
+        resources.add(errorhandling.MissingInputExceptionMapper.class);
+        resources.add(errorhandling.PersonNotFoundExceptionMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(rest.CorsFilter.class);
         resources.add(rest.HobbyResource.class);

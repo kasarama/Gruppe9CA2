@@ -12,6 +12,8 @@ import dto.PersonDTO;
 import dto.PersonListDTO;
 import dto.PhoneDTO;
 import dto.PhoneListDTO;
+import errorhandling.MissingInputException;
+import errorhandling.PersonNotFoundException;
 import facades.AddressFacade;
 import facades.HobbyFacade;
 import facades.PersonFacade;
@@ -49,7 +51,7 @@ public class PersonResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String addNewPerson(String PersonJson){
+    public String addNewPerson(String PersonJson) throws MissingInputException{
         PersonDTO newPerson = GSON.fromJson(PersonJson, PersonDTO.class);
         
         PersonDTO addedPerson = FACADE.addPerson(newPerson);
@@ -62,7 +64,7 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public String editPerson(String personJSON, @PathParam("id") int id){
+    public String editPerson(String personJSON, @PathParam("id") int id) throws PersonNotFoundException, MissingInputException{
         PersonDTO dto = GSON.fromJson(personJSON, PersonDTO.class);
         dto.setId(id);
         PersonDTO edited = FACADE.editPerson(dto);
@@ -73,7 +75,7 @@ public class PersonResource {
     @Path("{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteById(@PathParam("id") int id){
+    public String deleteById(@PathParam("id") int id) throws PersonNotFoundException{
         PersonDTO deleted = FACADE.deletePerson(id);
         return GSON.toJson(deleted);
     }

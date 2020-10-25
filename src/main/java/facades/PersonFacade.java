@@ -11,6 +11,8 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import errorhandling.MissingInputException;
+import errorhandling.PersonNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import static org.eclipse.persistence.sessions.remote.corba.sun.TransporterHelper.id;
 
 /**
  *
@@ -41,8 +44,16 @@ public class PersonFacade implements IPersonFacade {
         return instance;
     }
 
+
     @Override
-    public PersonDTO addPerson(PersonDTO personDTO) {
+    public PersonDTO addPerson(PersonDTO personDTO) throws MissingInputException {
+        if (personDTO.getFirstName() == null || personDTO.getLastName() == null) {
+            throw new MissingInputException("First Name and/or Last Name is missing");
+        } else
+        if (personDTO.getAddress() ==  null) {
+            throw new MissingInputException("Address is missing");
+        } else {
+        
         EntityManager em = emf.createEntityManager();
 
         Address addressEntity = new Address();
@@ -75,16 +86,23 @@ public class PersonFacade implements IPersonFacade {
         } finally {
             em.close();
         }
-
+        }
     }
 
+    
     @Override
-    public PersonDTO editPerson(PersonDTO p) {
+    public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException, MissingInputException {
+        if (p.getFirstName() == null || p.getLastName() == null) {
+            throw new MissingInputException("First Name and/or Last Name is missing");
+        }
         EntityManager em = emf.createEntityManager();
         PersonDTO editedPersonDTO;
         try {
             em.getTransaction().begin();
             Person person = em.find(Person.class, p.getId());
+            if (p == null) {
+            throw new PersonNotFoundException("Could not edit, provided id: " + p.getId() + " does not exist");
+        }
 
             person.setEmail(p.getEmail());
             person.setFirstName(p.getFirstName());
@@ -102,11 +120,15 @@ public class PersonFacade implements IPersonFacade {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public PersonDTO deletePerson(int id) {
+    public PersonDTO deletePerson(int id) throws PersonNotFoundException{
 
         EntityManager em = emf.createEntityManager();
         Person p = em.find(Person.class, id);
-
+            if (p == null) {
+            throw new PersonNotFoundException("Could not delete, provided id: " + id + " does not exist");
+        }
+        
+        
         PersonDTO dto = new PersonDTO(p);
 
         try {

@@ -4,6 +4,7 @@ import dto.AddressDTO;
 import dto.HobbyDTO;
 import dto.PersonDTO;
 import dto.PhoneDTO;
+import errorhandling.MissingInputException;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,7 +15,7 @@ import javax.persistence.Persistence;
  * @author magda
  */
 public class TestClass {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MissingInputException {
          EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
         PersonFacade personFacade = PersonFacade.getPersonFacade(emf);

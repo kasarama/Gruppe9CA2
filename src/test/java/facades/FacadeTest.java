@@ -10,6 +10,7 @@ import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
 import entities.Phone;
+import errorhandling.MissingInputException;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -131,7 +132,7 @@ public class FacadeTest {
     }
 
     @Test
-    public void testAddPerson() {
+    public void testAddPerson() throws MissingInputException {
 
         PersonDTO personDTO = new PersonDTO();
         AddressDTO addressDTO = new AddressDTO("Sesame Strrt", "666.sd","1234");
